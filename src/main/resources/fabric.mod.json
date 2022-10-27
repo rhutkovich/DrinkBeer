@@ -1,34 +1,28 @@
 {
   "schemaVersion": 1,
   "id": "drinkbeer",
-  "version": "3.0.2",
+  "version": "3.1.0",
 
   "name": "Drink Beer",
   "description": "Brewing placeable and drinkable beers in Minecraft!",
-  "authors": [
-    "Lekavar"
-  ],
-  "contact": {
-  },
+  "authors": ["Lekavar"],
+  "contact": {},
+  "contributors": ["ClockwerkKaiser"],
 
   "license": "GNU AFFERO GENERAL PUBLIC LICENSE version3.0",
   "icon": "assets/drinkbeer/icon.png",
 
   "environment": "*",
   "entrypoints": {
-    "main": [
-      "lekavar.lma.drinkbeer.DrinkBeer"
-    ],
-    "client": [
-      "lekavar.lma.drinkbeer.client.DrinkBeerClient"
-    ]
+    "main": ["lekavar.lma.drinkbeer.DrinkBeer"],
+    "client": ["lekavar.lma.drinkbeer.client.DrinkBeerClient"]
   },
 
   "depends": {
-    "fabricloader": ">=0.11.3",
+    "fabricloader": ">=0.14.10",
     "fabric": "*",
-    "minecraft": "1.17.x",
-    "java": ">=16"
+    "minecraft": "1.18.2",
+    "java": ">=17"
   },
   "suggests": {
     "another-mod": "*"

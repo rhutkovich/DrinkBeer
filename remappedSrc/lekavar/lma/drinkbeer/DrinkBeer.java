@@ -5,6 +5,7 @@ import lekavar.lma.drinkbeer.block.entity.BartendingTableEntity;
 import lekavar.lma.drinkbeer.block.entity.BeerBarrelEntity;
 import lekavar.lma.drinkbeer.block.entity.MixedBeerEntity;
 import lekavar.lma.drinkbeer.block.entity.TradeboxEntity;
+import lekavar.lma.drinkbeer.event.PlayerWakeUpEvent;
 import lekavar.lma.drinkbeer.item.BeerMugBlockItem;
 import lekavar.lma.drinkbeer.item.MixedBeerBlockItem;
 import lekavar.lma.drinkbeer.item.RecipeBoardBlockItem;
@@ -318,6 +319,9 @@ public class DrinkBeer implements ModInitializer {
 
         //Net working
         NetWorking.init();
+
+        //Player wake up event
+        EntitySleepEvents.STOP_SLEEPING.register(PlayerWakeUpEvent::onStopSleeping);
 
         //Print good list
         //TradeBoxTestManager.PrintGoodList();

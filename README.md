@@ -8,7 +8,7 @@ Customizations:
 - Various crash fixes.
 - Tested in both SSP and SMP
 
-You can view the mod's original Source Code here: https://github.com/Lekavar/DrinkBeer
-You can view the mod's modified (current) Soruce Code here: https://github.com/ClockwerkKaiser/DrinkBeer
+You can view the mod's original Source Code here: https://github.com/Lekavar/DrinkBeer  
+You can view the mod's modified (current) Soruce Code here: https://github.com/ClockwerkKaiser/DrinkBeer  
 
 Special thanks to Lekavar for creating this amazing mod!

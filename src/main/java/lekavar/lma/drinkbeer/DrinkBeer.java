@@ -5,6 +5,7 @@ import lekavar.lma.drinkbeer.block.entity.BartendingTableEntity;
 import lekavar.lma.drinkbeer.block.entity.BeerBarrelEntity;
 import lekavar.lma.drinkbeer.block.entity.MixedBeerEntity;
 import lekavar.lma.drinkbeer.block.entity.TradeboxEntity;
+import lekavar.lma.drinkbeer.event.WakeUpEvent;
 import lekavar.lma.drinkbeer.item.BeerMugBlockItem;
 import lekavar.lma.drinkbeer.item.MixedBeerBlockItem;
 import lekavar.lma.drinkbeer.item.RecipeBoardBlockItem;
@@ -17,10 +18,10 @@ import lekavar.lma.drinkbeer.statuseffects.DrunkFrostWalkerStatusEffect;
 import lekavar.lma.drinkbeer.statuseffects.DrunkStatusEffect;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
+import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
-import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.Material;
 import net.minecraft.block.entity.BlockEntityType;
@@ -78,7 +79,8 @@ public class DrinkBeer implements ModInitializer {
     public static final ScreenHandlerType<BeerBarrelScreenHandler> BEER_BARREL_SCREEN_HANDLER;
 
     static {
-        BEER_BARREL_SCREEN_HANDLER = ScreenHandlerRegistry.registerSimple(BEER_BARREL_ID, BeerBarrelScreenHandler::new);
+        //<Depreciated> BEER_BARREL_SCREEN_HANDLER = ScreenHandlerRegistry.registerSimple(BEER_BARREL_ID, BeerBarrelScreenHandler::new);
+        BEER_BARREL_SCREEN_HANDLER = Registry.register(Registry.SCREEN_HANDLER, BEER_BARREL_ID, new ScreenHandlerType<>(BeerBarrelScreenHandler::new));
     }
 
     //Bartending table
@@ -88,7 +90,8 @@ public class DrinkBeer implements ModInitializer {
     public static final ScreenHandlerType<BartendingTableScreenHandler> BARTENDING_TABLE_SCREEN_HANDLER;
 
     static {
-        BARTENDING_TABLE_SCREEN_HANDLER = ScreenHandlerRegistry.registerSimple(BARTENDING_TABLE_ID, BartendingTableScreenHandler::new);
+        //<Depreciated> BARTENDING_TABLE_SCREEN_HANDLER = ScreenHandlerRegistry.registerSimple(BARTENDING_TABLE_ID, BartendingTableScreenHandler::new);
+        BARTENDING_TABLE_SCREEN_HANDLER = Registry.register(Registry.SCREEN_HANDLER, BARTENDING_TABLE_ID, new ScreenHandlerType<>(BartendingTableScreenHandler::new));
     }
 
     //Trade box
@@ -98,7 +101,8 @@ public class DrinkBeer implements ModInitializer {
     public static final ScreenHandlerType<TradeBoxScreenHandler> TRADE_BOX_SCREEN_HANDLER;
 
     static {
-        TRADE_BOX_SCREEN_HANDLER = ScreenHandlerRegistry.registerSimple(TRADE_BOX_ID, TradeBoxScreenHandler::new);
+        //<Depreciated> TRADE_BOX_SCREEN_HANDLER = ScreenHandlerRegistry.registerSimple(TRADE_BOX_ID, TradeBoxScreenHandler::new);
+        TRADE_BOX_SCREEN_HANDLER = Registry.register(Registry.SCREEN_HANDLER, TRADE_BOX_ID, new ScreenHandlerType<>(TradeBoxScreenHandler::new));
     }
 
     //Call bells
@@ -311,6 +315,8 @@ public class DrinkBeer implements ModInitializer {
         //Status effects
         Registry.register(Registry.STATUS_EFFECT, new Identifier("drinkbeer", "drunk_frost_walker"), DRUNK_FROST_WALKER);
         Registry.register(Registry.STATUS_EFFECT, new Identifier("drinkbeer", "drunk"), DRUNK);
+        //Events
+        EntitySleepEvents.STOP_SLEEPING.register(WakeUpEvent::onStopSleeping);
         //Particles
         Registry.register(Registry.PARTICLE_TYPE, new Identifier("drinkbeer", "mixed_beer_default"), MIXED_BEER_DEFAULT);
         Registry.register(Registry.PARTICLE_TYPE, new Identifier("drinkbeer", "call_bell_tinkle_paw"), CALL_BELL_TINKLE_PAW);

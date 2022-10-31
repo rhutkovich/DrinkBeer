@@ -9,8 +9,6 @@ import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
-import java.awt.*;
-
 public class BartendingTableScreen extends HandledScreen<ScreenHandler> {
     private static final Identifier BARTENDING_TABLE_GUI_BASIC = new Identifier("drinkbeer", "textures/gui/container/bartending_table.png");
     BartendingTableScreenHandler screenHandler;

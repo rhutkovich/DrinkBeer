@@ -9,10 +9,10 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
-import net.fabricmc.fabric.api.client.rendereregistry.v1.BlockEntityRendererRegistry;
-import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
-import net.fabricmc.fabric.api.object.builder.v1.client.model.FabricModelPredicateProviderRegistry;
+import net.minecraft.client.gui.screen.ingame.HandledScreens;
+import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.client.particle.EmotionParticle;
 import net.minecraft.client.particle.FlameParticle;
 import net.minecraft.client.render.RenderLayer;
@@ -24,16 +24,16 @@ public class DrinkBeerClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         //Beer barrel's screen handler
-        ScreenRegistry.register(DrinkBeer.BEER_BARREL_SCREEN_HANDLER, BeerBarrelScreen::new);
+        HandledScreens.register(DrinkBeer.BEER_BARREL_SCREEN_HANDLER,BeerBarrelScreen::new);
         //Bartending table's screen handler
-        ScreenRegistry.register(DrinkBeer.BARTENDING_TABLE_SCREEN_HANDLER, BartendingTableScreen::new);
+        HandledScreens.register(DrinkBeer.BARTENDING_TABLE_SCREEN_HANDLER,BartendingTableScreen::new);
         //Trade box's screen handler
-        ScreenRegistry.register(DrinkBeer.TRADE_BOX_SCREEN_HANDLER, TradeBoxScreen::new);
+        HandledScreens.register(DrinkBeer.TRADE_BOX_SCREEN_HANDLER, TradeBoxScreen::new);
         //Mixed beer entity's renderer
-        BlockEntityRendererRegistry.INSTANCE.register(DrinkBeer.MIXED_BEER_ENTITY, context -> new MixedBeerEntityRenderer());
+        BlockEntityRendererRegistry.register(DrinkBeer.MIXED_BEER_ENTITY, context -> new MixedBeerEntityRenderer());
         //Mixed beer's model predicate provider
         try {
-            FabricModelPredicateProviderRegistry.register(DrinkBeer.MIXED_BEER.asItem(), new Identifier("beer_id"), (stack, world, entity, seed)
+            ModelPredicateProviderRegistry.register(DrinkBeer.MIXED_BEER.asItem(), new Identifier("beer_id"), (stack, world, entity, seed)
                     -> (float) MixedBeerManager.getBeerId(stack) / 100);
         } catch (Exception e) {
             System.out.println(e.getMessage());

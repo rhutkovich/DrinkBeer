@@ -12,14 +12,11 @@ public class WakeUpEvent {
         if (entity instanceof ServerPlayerEntity player &&
         player.hasStatusEffect(DrinkBeer.DRUNK) && player.getWorld().getTimeOfDay() % 24000 == 0) {
             int amp = entity.getStatusEffect(DrinkBeer.DRUNK).getAmplifier();
-            int time = entity.getStatusEffect(DrinkBeer.DRUNK).getDuration() * amp / 3;
+            int time = entity.getStatusEffect(DrinkBeer.DRUNK).getDuration() * amp / 10;
             player.removeStatusEffect(DrinkBeer.DRUNK);
             player.removeStatusEffect(StatusEffects.NAUSEA);
             player.removeStatusEffect(StatusEffects.SLOWNESS);
-            player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, time, 2, false, false));
-        }
-        else {
-
+            player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, time, 1, false, false));
         }
     }
 }

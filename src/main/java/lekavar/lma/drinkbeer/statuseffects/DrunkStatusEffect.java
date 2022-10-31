@@ -14,7 +14,7 @@ public class DrunkStatusEffect extends StatusEffect {
     public final static int MIN_DRUNK_AMPLIFIER = 0;
     private final static int BASE_DURATION = 1200;
     private final static boolean visible = false;
-    private static final int[] drunkDurations = {3600, 3000, 2400, 1800, 1200};
+    private static final int[] drunkDurations = {600, 1200, 1800, 2400, 3000};
     private static final int[] nauseaDurations = {160, 160, 200, 300, 600};
     private static final int[] slownessDurations = {0, 80, 160, 200, 600};
     private static final int[] harmulStatusEffectsIntervals = {200, 160, 200, 300, 20};

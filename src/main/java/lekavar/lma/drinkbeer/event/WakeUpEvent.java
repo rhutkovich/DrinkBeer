@@ -11,7 +11,8 @@ public class WakeUpEvent {
     public static void onStopSleeping(LivingEntity entity, BlockPos blockPos) {
         if (entity instanceof ServerPlayerEntity player &&
         player.hasStatusEffect(DrinkBeer.DRUNK) && player.getWorld().getTimeOfDay() % 24000 == 0) {
-            int time = entity.getStatusEffect(DrinkBeer.DRUNK).getDuration() / 2;
+            int amp = entity.getStatusEffect(DrinkBeer.DRUNK).getAmplifier();
+            int time = entity.getStatusEffect(DrinkBeer.DRUNK).getDuration() * amp / 3;
             player.removeStatusEffect(DrinkBeer.DRUNK);
             player.removeStatusEffect(StatusEffects.NAUSEA);
             player.removeStatusEffect(StatusEffects.SLOWNESS);

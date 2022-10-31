@@ -9,14 +9,16 @@ import net.minecraft.util.math.BlockPos;
 
 public class WakeUpEvent {
     public static void onStopSleeping(LivingEntity entity, BlockPos blockPos) {
-        int time = entity.getStatusEffect(DrinkBeer.DRUNK).getDuration() / 2;
         if (entity instanceof ServerPlayerEntity player &&
-        player.hasStatusEffect(DrinkBeer.DRUNK) &&
-        player.getWorld().getTimeOfDay() % 24000 == 0) {
+        player.hasStatusEffect(DrinkBeer.DRUNK) && player.getWorld().getTimeOfDay() % 24000 == 0) {
             player.removeStatusEffect(DrinkBeer.DRUNK);
             player.removeStatusEffect(StatusEffects.NAUSEA);
             player.removeStatusEffect(StatusEffects.SLOWNESS);
+            int time = entity.getStatusEffect(DrinkBeer.DRUNK).getDuration() / 2;
             player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, time, 2, false, false));
+        }
+        else {
+
         }
     }
 }

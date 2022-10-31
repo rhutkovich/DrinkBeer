@@ -79,7 +79,6 @@ public class DrinkBeer implements ModInitializer {
     public static final ScreenHandlerType<BeerBarrelScreenHandler> BEER_BARREL_SCREEN_HANDLER;
 
     static {
-        //<Depreciated> BEER_BARREL_SCREEN_HANDLER = ScreenHandlerRegistry.registerSimple(BEER_BARREL_ID, BeerBarrelScreenHandler::new);
         BEER_BARREL_SCREEN_HANDLER = Registry.register(Registry.SCREEN_HANDLER, BEER_BARREL_ID, new ScreenHandlerType<>(BeerBarrelScreenHandler::new));
     }
 
@@ -90,7 +89,6 @@ public class DrinkBeer implements ModInitializer {
     public static final ScreenHandlerType<BartendingTableScreenHandler> BARTENDING_TABLE_SCREEN_HANDLER;
 
     static {
-        //<Depreciated> BARTENDING_TABLE_SCREEN_HANDLER = ScreenHandlerRegistry.registerSimple(BARTENDING_TABLE_ID, BartendingTableScreenHandler::new);
         BARTENDING_TABLE_SCREEN_HANDLER = Registry.register(Registry.SCREEN_HANDLER, BARTENDING_TABLE_ID, new ScreenHandlerType<>(BartendingTableScreenHandler::new));
     }
 
@@ -101,7 +99,6 @@ public class DrinkBeer implements ModInitializer {
     public static final ScreenHandlerType<TradeBoxScreenHandler> TRADE_BOX_SCREEN_HANDLER;
 
     static {
-        //<Depreciated> TRADE_BOX_SCREEN_HANDLER = ScreenHandlerRegistry.registerSimple(TRADE_BOX_ID, TradeBoxScreenHandler::new);
         TRADE_BOX_SCREEN_HANDLER = Registry.register(Registry.SCREEN_HANDLER, TRADE_BOX_ID, new ScreenHandlerType<>(TradeBoxScreenHandler::new));
     }
 

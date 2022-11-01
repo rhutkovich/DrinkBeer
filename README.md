@@ -2,7 +2,7 @@
 Drink Beer by Lekavar, updated and slightly customized by ClockwerkKaiser.
 
 Customizations: 
-- Drunk StatusEffect timers have been reverse and slightly lowered. 1 Beer grants 30ish seconds of Drunk I. 5 Beers grants 2.3 minutes of Drunk V.
+- Drunk StatusEffect timers have been reversed and slightly lowered. 1 Beer grants 30ish seconds of Drunk I. 5 Beers grants 2.3 minutes of Drunk V.
 - (WIP) Hungover StatusEffect. Incentivises Drunk players to "Sleep it off" by instantly removing the negative status effects of Drunk on Sleep. However, the player wakes up with a Hangover (currently just Slowness II. Higher levels of Drunk result in longer Hangovers.
 - Replaced depreciated code for ease of future updating. 
 - Various crash fixes.

@@ -48,7 +48,6 @@ public class BartendingTableScreenHandler extends ScreenHandler {
         this.inventoryChangeListener = () -> {
         };
         this.context = context;
-        ItemStack oriBeerItemStack = isMixedBeer == 1 ? MixedBeerManager.genMixedBeerItemStack(beerId, spiceList) : new ItemStack(Beers.byId(beerId).getBeerItem(), 1);
         this.isUsed = new int[3];
         resetIsUsed();
 
@@ -72,7 +71,6 @@ public class BartendingTableScreenHandler extends ScreenHandler {
                 return canInsertBeerInputSlot(stack);
             }
         });
-        this.beerInputSlot.setStack(oriBeerItemStack);
         //Init spiceInput slots
         this.spiceInputSlot1 = this.addSlot(new Slot(input, 1, 67, 16) {
             public boolean canInsert(ItemStack stack) {
@@ -99,7 +97,6 @@ public class BartendingTableScreenHandler extends ScreenHandler {
                 takeInputStack();
             }
         });
-        this.resultSlot.setStack(oriBeerItemStack);
 
         //Init player inventory
         int m;
@@ -220,9 +217,9 @@ public class BartendingTableScreenHandler extends ScreenHandler {
         resetIsUsed();
         int beerId = getBeerInputBeerId();
         ItemStack resultStack;
-        //If is basic liquor and there's no spices, the result is basic liquor itself
+        //If is basic liquor and there's no spices, the result is not generated
         if (!isMixedBeer() && getInputSpicesNum() == 0) {
-            resultStack = new ItemStack(Beers.byId(beerId).getBeerItem(), 1);
+            resultStack = ItemStack.EMPTY;
         }
         //Otherwise the result must be mixed beer
         else {
@@ -251,30 +248,6 @@ public class BartendingTableScreenHandler extends ScreenHandler {
             resultStack = MixedBeerManager.genMixedBeerItemStack(beerId, oriSpiceList);
         }
         this.resultSlot.setStack(resultStack);
-    }
-
-    @Override
-    public ItemStack transferSlot(PlayerEntity player, int invSlot) {
-        ItemStack newStack = ItemStack.EMPTY;
-        Slot slot = this.slots.get(invSlot);
-        if (slot != null && slot.hasStack()) {
-            ItemStack originalStack = slot.getStack();
-            newStack = originalStack.copy();
-            if (invSlot < this.input.size()) {
-                if (!this.insertItem(originalStack, this.input.size(), this.slots.size(), true)) {
-                    return ItemStack.EMPTY;
-                }
-            } else if (!this.insertItem(originalStack, 0, this.input.size(), false)) {
-                return ItemStack.EMPTY;
-            }
-
-            if (originalStack.isEmpty()) {
-                slot.setStack(ItemStack.EMPTY);
-            } else {
-                slot.markDirty();
-            }
-        }
-        return newStack;
     }
 
     @Override
@@ -307,5 +280,28 @@ public class BartendingTableScreenHandler extends ScreenHandler {
             this.isUsed[1] = 0;
             this.isUsed[2] = 0;
         }
+    }
+    @Override
+    public ItemStack transferSlot(PlayerEntity player, int invSlot) {
+        ItemStack newStack = ItemStack.EMPTY;
+        Slot slot = this.slots.get(invSlot);
+        if (slot != null && slot.hasStack()) {
+            ItemStack originalStack = slot.getStack();
+            newStack = originalStack.copy();
+            if (invSlot < this.input.size()) {
+                if (!this.insertItem(originalStack, this.input.size(), this.slots.size(), true)) {
+                    return ItemStack.EMPTY;
+                }
+            } else if (!this.insertItem(originalStack, 0, this.input.size(), false)) {
+                return ItemStack.EMPTY;
+            }
+
+            if (originalStack.isEmpty()) {
+                slot.setStack(ItemStack.EMPTY);
+            } else {
+                slot.markDirty();
+            }
+        }
+        return newStack;
     }
 }

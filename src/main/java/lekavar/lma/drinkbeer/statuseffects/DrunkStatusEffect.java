@@ -14,7 +14,7 @@ public class DrunkStatusEffect extends StatusEffect {
     public final static int MIN_DRUNK_AMPLIFIER = 0;
     private final static int BASE_DURATION = 1200;
     private final static boolean visible = false;
-    private static final int[] drunkDurations = {3600, 3000, 2400, 1800, 1200};
+    private static final int[] drunkDurations = {600, 1200, 1800, 2400, 3000};
     private static final int[] nauseaDurations = {160, 160, 200, 300, 600};
     private static final int[] slownessDurations = {0, 80, 160, 200, 600};
     private static final int[] harmulStatusEffectsIntervals = {200, 160, 200, 300, 20};
@@ -44,15 +44,15 @@ public class DrunkStatusEffect extends StatusEffect {
         } else if (currentDrunkAmplifier >= MIN_DRUNK_AMPLIFIER && newDrunkAmplifier < MIN_DRUNK_AMPLIFIER) {
             user.removeStatusEffect(DrinkBeer.DRUNK);
         } else if (currentDrunkAmplifier < MIN_DRUNK_AMPLIFIER) {
-            user.addStatusEffect(new StatusEffectInstance(DrinkBeer.DRUNK, DrunkStatusEffect.getDrunkDuratioin(newDrunkAmplifier), newDrunkAmplifier));
+            user.addStatusEffect(new StatusEffectInstance(DrinkBeer.DRUNK, DrunkStatusEffect.getDrunkDuration(newDrunkAmplifier), newDrunkAmplifier));
         } else {
             if(newDrunkAmplifier > currentDrunkAmplifier){
-                user.addStatusEffect(new StatusEffectInstance(DrinkBeer.DRUNK, DrunkStatusEffect.getDrunkDuratioin(newDrunkAmplifier), newDrunkAmplifier));
+                user.addStatusEffect(new StatusEffectInstance(DrinkBeer.DRUNK, DrunkStatusEffect.getDrunkDuration(newDrunkAmplifier), newDrunkAmplifier));
             }
             else if(newDrunkAmplifier < currentDrunkAmplifier){
                 int tempDrunkAmplifier = currentDrunkAmplifier - newDrunkAmplifier;
                 while(tempDrunkAmplifier > 0){
-                    decreaseDrunkStatusEffefct(user,currentDrunkAmplifier);
+                    decreaseDrunkStatusEffect(user,currentDrunkAmplifier);
                     currentDrunkAmplifier--;
                     tempDrunkAmplifier --;
                 }
@@ -71,7 +71,7 @@ public class DrunkStatusEffect extends StatusEffect {
         giveHarmfulStatusEffects(entity, amplifier, time);
         //Give next lower Drunk status effect when duration's out
         if (time == 1) {
-            decreaseDrunkStatusEffefct(entity, amplifier);
+            decreaseDrunkStatusEffect(entity, amplifier);
         }
     }
 
@@ -90,7 +90,7 @@ public class DrunkStatusEffect extends StatusEffect {
         }
     }
 
-    private static void decreaseDrunkStatusEffefct(LivingEntity entity, int amplifier) {
+    private static void decreaseDrunkStatusEffect(LivingEntity entity, int amplifier) {
         if (!entity.getEntityWorld().isClient()) {
             entity.removeStatusEffect(DrinkBeer.DRUNK);
             StatusEffectInstance nextDrunkStatusEffect = getDecreasedDrunkStatusEffect(amplifier);
@@ -105,17 +105,11 @@ public class DrunkStatusEffect extends StatusEffect {
         if (nextDrunkAmplifier < MIN_DRUNK_AMPLIFIER) {
             return null;
         } else {
-            return new StatusEffectInstance(DrinkBeer.DRUNK, getDrunkDuratioin(nextDrunkAmplifier), nextDrunkAmplifier);
+            return new StatusEffectInstance(DrinkBeer.DRUNK, getDrunkDuration(nextDrunkAmplifier), nextDrunkAmplifier);
         }
     }
 
-    public static int getNextDrunkAmplifier(LivingEntity user) {
-        StatusEffectInstance statusEffectInstance = user.getStatusEffect(DrinkBeer.DRUNK);
-        int drunkAmplifier = statusEffectInstance == null ? -1 : statusEffectInstance.getAmplifier();
-        return drunkAmplifier < MAX_DRUNK_AMPLIFIER ? drunkAmplifier + 1 : drunkAmplifier;
-    }
-
-    public static int getDrunkDuratioin(int amplifier) {
+    public static int getDrunkDuration(int amplifier) {
         try {
             return drunkDurations[amplifier];
         } catch (Exception e) {

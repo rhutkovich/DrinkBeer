@@ -299,9 +299,6 @@ public class TradeBoxScreenHandler extends ScreenHandler {
             if (block.asItem().equals(DrinkBeer.TRADE_BOX_NORMAL.asItem())) {
                 tradeMission = TradeMission.genRandomTradeMission();
             }
-            /*else if(block.asItem().equals(DrinkBeer.TRADE_BOX_NORTHON.asItem()){
-                tradeMission = TradeMission.genSpecificTradeMission(Locations.NORTHON.getId());
-            }*/
         } catch (Exception e) {
             tradeMission = TradeMission.genRandomTradeMission();
         }

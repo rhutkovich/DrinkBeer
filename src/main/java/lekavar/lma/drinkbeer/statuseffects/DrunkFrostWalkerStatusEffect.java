@@ -1,6 +1,5 @@
 package lekavar.lma.drinkbeer.statuseffects;
 
-import lekavar.lma.drinkbeer.DrinkBeer;
 import net.minecraft.enchantment.FrostWalkerEnchantment;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.AttributeContainer;

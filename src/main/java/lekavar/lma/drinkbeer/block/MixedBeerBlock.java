@@ -119,9 +119,9 @@ public class MixedBeerBlock extends BlockWithEntity {
     }
 
     @Environment(EnvType.CLIENT)
-    @Override
+    //@Override
     public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
-        super.randomDisplayTick(state, world, pos, random);
+        super.randomDisplayTick(state, world, pos, (net.minecraft.util.math.random.Random) random);
         if (random.nextInt(5) == 0) {
             MixedBeerEntity mixedBeerEntity = (MixedBeerEntity) world.getBlockEntity(pos);
             DefaultParticleType particle = SpiceAndFlavorManager.getLastSpiceFlavorParticle(mixedBeerEntity.getSpiceList());

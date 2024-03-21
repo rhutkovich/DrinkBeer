@@ -3,20 +3,20 @@ package lekavar.lma.drinkbeer.client;
 import lekavar.lma.drinkbeer.DrinkBeer;
 import lekavar.lma.drinkbeer.manager.MixedBeerManager;
 import lekavar.lma.drinkbeer.renderer.MixedBeerEntityRenderer;
-import lekavar.lma.drinkbeer.screen.*;
+import lekavar.lma.drinkbeer.screen.BartendingTableScreen;
+import lekavar.lma.drinkbeer.screen.BeerBarrelScreen;
+import lekavar.lma.drinkbeer.screen.TradeBoxScreen;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry;
-import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.client.particle.EmotionParticle;
 import net.minecraft.client.particle.FlameParticle;
 import net.minecraft.client.render.RenderLayer;
-import net.minecraft.screen.PlayerScreenHandler;
 import net.minecraft.util.Identifier;
 
 @Environment(EnvType.CLIENT)
@@ -39,10 +39,11 @@ public class DrinkBeerClient implements ClientModInitializer {
             System.out.println(e.getMessage());
         }
         //Particles
-        ClientSpriteRegistryCallback.event(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE).register(((atlasTexture, registry) -> {
+        // TODO fix particles
+        /*ClientSpriteRegistryCallback.event(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE).register(((atlasTexture, registry) -> {
             registry.register(new Identifier("drinkbeer", "particle/mixed_beer_default"));
             registry.register(new Identifier("drinkbeer", "particle/call_bell_tinkle_paw"));
-        }));
+        }));*/
         ParticleFactoryRegistry.getInstance().register(DrinkBeer.MIXED_BEER_DEFAULT, FlameParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(DrinkBeer.CALL_BELL_TINKLE_PAW, EmotionParticle.AngryVillagerFactory::new);
         /*Transparent texture*/

@@ -41,6 +41,6 @@ public class BeerRecipeBoardBlock extends HorizontalFacingBlock {
     }
 
     public BlockState getPlacementState(ItemPlacementContext ctx) {
-        return (BlockState) this.getDefaultState().with(FACING, ctx.getPlayerFacing());
+        return this.getDefaultState().with(FACING, ctx.getPlayer().getHorizontalFacing());
     }
 }

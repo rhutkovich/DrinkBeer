@@ -49,7 +49,7 @@ public class TradeboxBlock extends BlockWithEntity{
     }
 
     public BlockState getPlacementState(ItemPlacementContext ctx) {
-        return (BlockState) this.getDefaultState().with(HorizontalFacingBlock.FACING, ctx.getPlayerFacing());
+        return this.getDefaultState().with(HorizontalFacingBlock.FACING, ctx.getPlayer().getHorizontalFacing());
     }
 
     @Override

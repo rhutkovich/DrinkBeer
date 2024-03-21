@@ -1,16 +1,14 @@
 package lekavar.lma.drinkbeer.screen;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import lekavar.lma.drinkbeer.block.TradeboxBlock;
 import lekavar.lma.drinkbeer.manager.TradeboxManager;
 import lekavar.lma.drinkbeer.networking.NetWorking;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.gui.widget.TexturedButtonWidget;
-import net.minecraft.client.render.GameRenderer;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.Text;
@@ -32,33 +30,31 @@ public class TradeBoxScreen extends HandledScreen<ScreenHandler> {
     }
 
     @Override
-    protected void drawBackground(MatrixStack matrices, float delta, int mouseX, int mouseY) {
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-        RenderSystem.setShaderTexture(0, TRADE_BOX_GUI);
+    protected void drawBackground(DrawContext drawContext, float delta, int mouseX, int mouseY) {
+        drawContext.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         int x = (width - backgroundWidth) / 2;
         int y = (height - backgroundHeight) / 2;
-        drawTexture(matrices, x, y, 0, 0, backgroundWidth, backgroundHeight);
+        drawContext.drawTexture(TRADE_BOX_GUI, x, y, 0, 0, backgroundWidth, backgroundHeight);
         if (screenHandler.isCooling()) {
-            drawTexture(matrices, x + 84, y + 25, 178, 38, 72, 36);
+            drawContext.drawTexture(TRADE_BOX_GUI, x + 84, y + 25, 178, 38, 72, 36);
             String timeStr = convertTickToTime(screenHandler.getCoolingTime());
-            textRenderer.draw(matrices, timeStr, x + 114, y + 39, new Color(64, 64, 64, 255).getRGB());
+            drawContext.drawText(textRenderer, timeStr, x + 114, y + 39, new Color(64, 64, 64, 255).getRGB(), true);
         } else if (screenHandler.isTrading()) {
             if (isPointWithinBounds(157, 6, 13, 13, (double) mouseX, (double) mouseY)) {
-                drawTexture(matrices, x + 155, y + 4, 178, 19, 16, 16);
+                drawContext.drawTexture(TRADE_BOX_GUI, x + 155, y + 4, 178, 19, 16, 16);
             } else {
-                drawTexture(matrices, x + 155, y + 4, 178, 0, 16, 16);
+                drawContext.drawTexture(TRADE_BOX_GUI, x + 155, y + 4, 178, 0, 16, 16);
             }
         }
         if (!screenHandler.isCooling()) {
             Language language = Language.getInstance();
             String youStr = language.get("drinkbeer.resident.you");
-            textRenderer.draw(matrices, youStr, x + 85, y + 16, new Color(64, 64, 64, 255).getRGB());
+            drawContext.drawText(textRenderer, youStr, x + 85, y + 16, new Color(64, 64, 64, 255).getRGB(), true);
             String locationAndResidentStr =
                     language.get(TradeboxManager.getLocationTranslationKey(this.screenHandler.getLocationId()))
                             + "-" +
                             language.get(TradeboxManager.getResidentTranslationKey(this.screenHandler.getResidentId()));
-            textRenderer.draw(matrices, locationAndResidentStr, x + 85, y + 63, new Color(64, 64, 64, 255).getRGB());
+            drawContext.drawText(textRenderer, locationAndResidentStr, x + 85, y + 63, new Color(64, 64, 64, 255).getRGB(), true);
         }
     }
 
@@ -74,10 +70,10 @@ public class TradeBoxScreen extends HandledScreen<ScreenHandler> {
     }
 
     @Override
-    public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
-        renderBackground(matrices);
-        super.render(matrices, mouseX, mouseY, delta);
-        drawMouseoverTooltip(matrices, mouseX, mouseY);
+    public void render(DrawContext drawContext, int mouseX, int mouseY, float delta) {
+        renderBackground(drawContext);
+        super.render(drawContext, mouseX, mouseY, delta);
+        drawMouseoverTooltip(drawContext, mouseX, mouseY);
     }
 
     @Override
@@ -90,7 +86,7 @@ public class TradeBoxScreen extends HandledScreen<ScreenHandler> {
         int x = (width - backgroundWidth) / 2;
         int y = (height - backgroundHeight) / 2;
         this.addDrawableChild(new TexturedButtonWidget(x + 156, y + 5, 15, 15, 210, 0, 0, TRADE_BOX_GUI, (buttonWidget) -> {
-            if(screenHandler.isTrading()) {
+            if (screenHandler.isTrading()) {
                 BlockPos pos = getHitTradeBoxBlockPos();
                 if (pos != null)
                     NetWorking.sendRefreshTradebox(pos);

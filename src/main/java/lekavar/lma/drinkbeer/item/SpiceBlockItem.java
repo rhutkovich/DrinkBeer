@@ -1,6 +1,5 @@
 package lekavar.lma.drinkbeer.item;
 
-import lekavar.lma.drinkbeer.DrinkBeer;
 import lekavar.lma.drinkbeer.manager.SpiceAndFlavorManager;
 import lekavar.lma.drinkbeer.util.mixedbeer.Flavors;
 import lekavar.lma.drinkbeer.util.mixedbeer.Spices;
@@ -20,7 +19,7 @@ import java.util.List;
 
 public class SpiceBlockItem extends BlockItem {
     public SpiceBlockItem(Block block, @Nullable StatusEffectInstance statusEffectInstance, int hunger) {
-        super(block, new Item.Settings().group(DrinkBeer.DRINK_BEER_GENERAL).maxCount(64)
+        super(block, new Item.Settings().maxCount(64)
                 .food(statusEffectInstance != null
                         ? new FoodComponent.Builder().hunger(hunger).statusEffect(statusEffectInstance, 1).alwaysEdible().build()
                         : new FoodComponent.Builder().hunger(hunger).alwaysEdible().build())

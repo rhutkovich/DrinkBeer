@@ -1,6 +1,5 @@
 package lekavar.lma.drinkbeer.item;
 
-import lekavar.lma.drinkbeer.DrinkBeer;
 import lekavar.lma.drinkbeer.statuseffects.DrunkStatusEffect;
 import lekavar.lma.drinkbeer.statuseffects.NightHowlStatusEffect;
 import lekavar.lma.drinkbeer.util.beer.Beers;
@@ -22,7 +21,7 @@ import java.util.List;
 
 public class BeerMugBlockItem extends BeerBlockItem {
     public BeerMugBlockItem(Block block, @Nullable StatusEffectInstance statusEffectInstance, int hunger) {
-        super(block, new Item.Settings().group(DrinkBeer.DRINK_BEER).maxCount(16)
+        super(block, new Item.Settings().maxCount(16)
                 .food(statusEffectInstance != null
                         ? new FoodComponent.Builder().hunger(hunger).statusEffect(statusEffectInstance, 1).alwaysEdible().build()
                         : new FoodComponent.Builder().hunger(hunger).alwaysEdible().build())

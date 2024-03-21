@@ -32,7 +32,7 @@ public class BeerMugBlock extends HorizontalFacingBlock {
     public static final IntProperty AMOUNT = IntProperty.of("amount", 1, 3);
 
     public BeerMugBlock(AbstractBlock.Settings settings) {
-        super(settings.nonOpaque());
+        super(settings.pistonBehavior(PistonBehavior.DESTROY).nonOpaque());
         setDefaultState(this.stateManager.getDefaultState().with(Properties.HORIZONTAL_FACING, Direction.NORTH).with(AMOUNT, 1));
     }
 
@@ -56,7 +56,7 @@ public class BeerMugBlock extends HorizontalFacingBlock {
     }
 
     public BlockState getPlacementState(ItemPlacementContext ctx) {
-        return (BlockState) this.getDefaultState().with(FACING, ctx.getPlayerFacing());
+        return this.getDefaultState().with(FACING, ctx.getPlayer().getHorizontalFacing());
     }
 
     @Override
@@ -121,7 +121,7 @@ public class BeerMugBlock extends HorizontalFacingBlock {
     public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
         Item item = world.getBlockState(pos.offset(Direction.DOWN, 1)).getBlock().asItem();
         try {
-            return !item.getGroup().equals(DrinkBeer.DRINK_BEER);
+            return !DrinkBeer.DRINK_BEER.contains(item.getDefaultStack());
         } catch (Exception e) {
             //System.out.println(e.getMessage());
             return !item.equals(Items.AIR);
@@ -130,10 +130,5 @@ public class BeerMugBlock extends HorizontalFacingBlock {
 
     public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState newState, WorldAccess world, BlockPos pos, BlockPos posFrom) {
         return canPlaceAt(state, world, pos) ? super.getStateForNeighborUpdate(state, direction, newState, world, pos, posFrom) : Blocks.AIR.getDefaultState();
-    }
-
-    @Override
-    public PistonBehavior getPistonBehavior(BlockState state) {
-        return PistonBehavior.DESTROY;
     }
 }

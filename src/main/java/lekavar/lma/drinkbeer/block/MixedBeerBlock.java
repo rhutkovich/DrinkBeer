@@ -39,7 +39,7 @@ public class MixedBeerBlock extends BlockWithEntity {
     public List<Integer> spiceList;
 
     public MixedBeerBlock(AbstractBlock.Settings settings) {
-        super(settings.nonOpaque());
+        super(settings.pistonBehavior(PistonBehavior.DESTROY).nonOpaque());
         setDefaultState(this.stateManager.getDefaultState().with(BEER_ID, Beers.DEFAULT_BEER_ID));
         this.spiceList = new ArrayList<>();
     }
@@ -62,7 +62,8 @@ public class MixedBeerBlock extends BlockWithEntity {
     public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
         Item item = world.getBlockState(pos.offset(Direction.DOWN, 1)).getBlock().asItem();
         try {
-            return !item.getGroup().equals(DrinkBeer.DRINK_BEER);
+            // TODO not sure about this comparison
+            return !DrinkBeer.DRINK_BEER.contains(item.getDefaultStack());
         } catch (Exception e) {
             //System.out.println(e.getMessage());
             return !item.equals(Items.AIR);
@@ -71,11 +72,6 @@ public class MixedBeerBlock extends BlockWithEntity {
 
     public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState newState, WorldAccess world, BlockPos pos, BlockPos posFrom) {
         return canPlaceAt(state, world, pos) ? super.getStateForNeighborUpdate(state, direction, newState, world, pos, posFrom) : Blocks.AIR.getDefaultState();
-    }
-
-    @Override
-    public PistonBehavior getPistonBehavior(BlockState state) {
-        return PistonBehavior.DESTROY;
     }
 
     @Override

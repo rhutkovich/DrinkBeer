@@ -2,7 +2,6 @@ package lekavar.lma.drinkbeer.block;
 
 import lekavar.lma.drinkbeer.DrinkBeer;
 import lekavar.lma.drinkbeer.block.entity.BartendingTableEntity;
-import lekavar.lma.drinkbeer.screen.BartendingTableScreenHandler;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.LivingEntity;
@@ -10,7 +9,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.NamedScreenHandlerFactory;
-import net.minecraft.screen.ScreenHandler;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
@@ -58,7 +56,7 @@ public class BartendingTableBlock extends BlockWithEntity implements BlockEntity
     }
 
     public BlockState getPlacementState(ItemPlacementContext ctx) {
-        return (BlockState) this.getDefaultState().with(HorizontalFacingBlock.FACING, ctx.getPlayerFacing());
+        return this.getDefaultState().with(HorizontalFacingBlock.FACING, ctx.getPlayer().getHorizontalFacing());
     }
 
     @Override
@@ -72,14 +70,15 @@ public class BartendingTableBlock extends BlockWithEntity implements BlockEntity
         try {
             ItemStack mainHandStack = player.getMainHandStack();
             //Open screen when beer in main hand
-            if (!world.isClient && mainHandStack.getItem().getGroup() == DrinkBeer.DRINK_BEER) {
+            // TODO I'm not sure about the comparison by stack instead of direct group but ... whatever ^\(-_-)/^
+            if (!world.isClient && DrinkBeer.DRINK_BEER.contains(mainHandStack.getItem().getDefaultStack())) {
                 world.playSound(null, pos, SoundEvents.BLOCK_WOOD_PLACE, SoundCategory.BLOCKS, 1f, 1f);
                 NamedScreenHandlerFactory screenHandlerFactory = state.createScreenHandlerFactory(world, pos);
                if (screenHandlerFactory != null) {
                    player.openHandledScreen(screenHandlerFactory);
                 }
             }
-            //Or change apperance
+            //Or change appearance
             else {
                 boolean currentOpenedState = state.get(OPENED);
                 if (!world.isClient) {

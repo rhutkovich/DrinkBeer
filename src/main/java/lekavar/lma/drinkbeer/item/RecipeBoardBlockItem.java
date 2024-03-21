@@ -18,15 +18,13 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.Map;
 
-import static lekavar.lma.drinkbeer.DrinkBeer.DRINK_BEER_GENERAL;
-
 public class RecipeBoardBlockItem extends BlockItem {
     public RecipeBoardBlockItem(Block block, Settings settings) {
         super(block, settings);
     }
 
     public RecipeBoardBlockItem(Block block) {
-        super(block, new Item.Settings().group(DRINK_BEER_GENERAL).maxCount(1));
+        super(block, new Item.Settings().maxCount(1));
     }
 
     public void appendRecipeBoardTooltip(ItemStack stack, List<Text> tooltip) {

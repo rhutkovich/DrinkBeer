@@ -23,6 +23,8 @@ import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.Vec3i;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -229,11 +231,18 @@ public class TradeBoxScreenHandler extends ScreenHandler {
         return propertyDelegate.get(2);
     }
 
+    private Vec3i getPlayerPosInt(PlayerEntity player) {
+        Vec3d playerPositionDouble = player.getPos();
+        return new Vec3i(
+                (int) playerPositionDouble.x,
+                (int) playerPositionDouble.y,
+                (int) playerPositionDouble.z);
+    }
     @Override
-    public void close(PlayerEntity player) {
-        super.close(player);
-        if (!player.world.isClient) {
-            player.world.playSound(null, new BlockPos(player.getPos()), DrinkBeer.TRADEBOX_CLOSE_EVENT, SoundCategory.BLOCKS, 0.6f, 1f);
+    public void onClosed(PlayerEntity player) {
+        super.onClosed(player);
+        if (!player.getWorld().isClient) {
+            player.getWorld().playSound(null, new BlockPos(getPlayerPosInt(player)), DrinkBeer.TRADEBOX_CLOSE_EVENT, SoundCategory.BLOCKS, 0.6f, 1f);
         }
         this.context.run((world, blockPos) -> {
             this.dropInventory(player, this.tradeboxInventory);
@@ -241,7 +250,7 @@ public class TradeBoxScreenHandler extends ScreenHandler {
     }
 
     @Override
-    public ItemStack transferSlot(PlayerEntity player, int invSlot) {
+    public ItemStack quickMove(PlayerEntity player, int invSlot) {
         ItemStack newStack = ItemStack.EMPTY;
         Slot slot = this.slots.get(invSlot);
         if (slot != null && slot.hasStack()) {
@@ -295,7 +304,7 @@ public class TradeBoxScreenHandler extends ScreenHandler {
     public void setTradeboxTrading() {
         TradeMission tradeMission = new TradeMission();
         try {
-            Block block = player.world.getBlockState(pos).getBlock();
+            Block block = player.getWorld().getBlockState(pos).getBlock();
             if (block.asItem().equals(DrinkBeer.TRADE_BOX_NORMAL.asItem())) {
                 tradeMission = TradeMission.genRandomTradeMission();
             }

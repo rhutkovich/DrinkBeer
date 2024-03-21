@@ -114,8 +114,8 @@ public class BartendingTableScreenHandler extends ScreenHandler {
 
     private boolean canInsertBeerInputSlot(ItemStack stack) {
         try {
-            assert stack.getItem().getGroup() != null;
-            if (stack.getItem().getGroup().equals(DrinkBeer.DRINK_BEER)) {
+            // TODO not sure about this comparison
+            if (DrinkBeer.DRINK_BEER.contains(stack)) {
                 return true;
             }
         } catch (Exception e) {
@@ -267,8 +267,8 @@ public class BartendingTableScreenHandler extends ScreenHandler {
     }
 
     @Override
-    public void close(PlayerEntity player) {
-        super.close(player);
+    public void onClosed(PlayerEntity player) {
+        super.onClosed(player);
         this.context.run((world, blockPos) -> {
             this.dropInventory(player, this.input);
         });
@@ -282,7 +282,7 @@ public class BartendingTableScreenHandler extends ScreenHandler {
         }
     }
     @Override
-    public ItemStack transferSlot(PlayerEntity player, int invSlot) {
+    public ItemStack quickMove(PlayerEntity player, int invSlot) {
         ItemStack newStack = ItemStack.EMPTY;
         Slot slot = this.slots.get(invSlot);
         if (slot != null && slot.hasStack()) {

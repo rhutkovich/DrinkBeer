@@ -32,7 +32,7 @@ public class SpiceBlock extends TransparentBlock {
     public final static VoxelShape SPICE_DRIED_SELAGINELLA = createCuboidShape(5.5, 0, 5.5, 10.5, 4.5, 10.5);
 
     public SpiceBlock(AbstractBlock.Settings settings) {
-        super(settings.nonOpaque());
+        super(settings.pistonBehavior(PistonBehavior.DESTROY).nonOpaque());
         setDefaultState(this.stateManager.getDefaultState().with(Properties.HORIZONTAL_FACING, Direction.NORTH));
     }
 
@@ -58,7 +58,7 @@ public class SpiceBlock extends TransparentBlock {
     }
 
     public BlockState getPlacementState(ItemPlacementContext ctx) {
-        return (BlockState) this.getDefaultState().with(HorizontalFacingBlock.FACING, ctx.getPlayerFacing());
+        return this.getDefaultState().with(HorizontalFacingBlock.FACING, ctx.getPlayer().getHorizontalFacing());
     }
 
     public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
@@ -68,11 +68,6 @@ public class SpiceBlock extends TransparentBlock {
 
     public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState newState, WorldAccess world, BlockPos pos, BlockPos posFrom) {
         return canPlaceAt(state, world, pos) ? super.getStateForNeighborUpdate(state, direction, newState, world, pos, posFrom) : Blocks.AIR.getDefaultState();
-    }
-
-    @Override
-    public PistonBehavior getPistonBehavior(BlockState state) {
-        return PistonBehavior.DESTROY;
     }
 
     @Environment(EnvType.CLIENT)

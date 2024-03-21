@@ -25,7 +25,7 @@ import java.util.List;
 
 public class MixedBeerBlockItem extends BeerBlockItem {
     public MixedBeerBlockItem() {
-        super(DrinkBeer.MIXED_BEER, new Item.Settings().group(DrinkBeer.DRINK_BEER).maxCount(1)
+        super(DrinkBeer.MIXED_BEER, new Item.Settings().maxCount(1)
                 .food(new FoodComponent.Builder().alwaysEdible().build()));
     }
 

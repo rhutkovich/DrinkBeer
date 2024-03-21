@@ -25,7 +25,7 @@ public class CallBellBlock extends Block {
     public final static VoxelShape SHAPE = createCuboidShape(5.5f, 0, 5.5f, 10.5f, 4, 10.5f);
 
     public CallBellBlock(AbstractBlock.Settings settings) {
-        super(settings);
+        super(settings.pistonBehavior(PistonBehavior.DESTROY));
     }
 
     @Override
@@ -70,10 +70,5 @@ public class CallBellBlock extends Block {
 
     public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState newState, WorldAccess world, BlockPos pos, BlockPos posFrom) {
         return canPlaceAt(state, world, pos) ? super.getStateForNeighborUpdate(state, direction, newState, world, pos, posFrom) : Blocks.AIR.getDefaultState();
-    }
-
-    @Override
-    public PistonBehavior getPistonBehavior(BlockState state) {
-        return PistonBehavior.DESTROY;
     }
 }

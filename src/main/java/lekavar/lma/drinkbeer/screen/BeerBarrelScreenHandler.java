@@ -12,7 +12,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ArrayPropertyDelegate;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
@@ -21,8 +22,13 @@ import net.minecraft.screen.slot.Slot;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.Vec3i;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class BeerBarrelScreenHandler extends ScreenHandler {
     private final Inventory input;
@@ -208,7 +214,7 @@ public class BeerBarrelScreenHandler extends ScreenHandler {
     }
 
     @Override
-    public ItemStack transferSlot(PlayerEntity player, int invSlot) {
+    public ItemStack quickMove(PlayerEntity player, int invSlot) {
         ItemStack newStack = ItemStack.EMPTY;
         Slot slot = this.slots.get(invSlot);
         if (slot != null && slot.hasStack()) {
@@ -272,10 +278,19 @@ public class BeerBarrelScreenHandler extends ScreenHandler {
         return BeerRecipeManager.matchBeerRecipe(inputMaterialMap, player);
     }
 
-    public void close(PlayerEntity player) {
-        super.close(player);
-        if (!player.world.isClient) {
-            player.world.playSound(null, new BlockPos(player.getPos()), SoundEvents.BLOCK_BARREL_CLOSE, SoundCategory.BLOCKS, 1f, 1f);
+    private Vec3i getPlayerPosInt(PlayerEntity player) {
+        Vec3d playerPositionDouble = player.getPos();
+        return new Vec3i(
+                (int) playerPositionDouble.x,
+                (int) playerPositionDouble.y,
+                (int) playerPositionDouble.z);
+    }
+    @Override
+    public void onClosed(PlayerEntity player) {
+        super.onClosed(player);
+        if (!player.getWorld().isClient) {
+
+            player.getWorld().playSound(null, new BlockPos(getPlayerPosInt(player)), SoundEvents.BLOCK_BARREL_CLOSE, SoundCategory.BLOCKS, 1f, 1f);
         }
         if (this.isMaterialCompleted() && !isBrewing()) {
             setIsMaterialCompleted(false);
@@ -359,11 +374,11 @@ public class BeerBarrelScreenHandler extends ScreenHandler {
     }
 
     private void playPouringSound(PlayerEntity player, ItemStack stack) {
-        if (!player.world.isClient) {
+        if (!player.getWorld().isClient) {
             if (stack.getItem().equals(DrinkBeer.BEER_MUG_FROTHY_PINK_EGGNOG.asItem())) {
-                player.world.playSound(null, new BlockPos(player.getPos()), DrinkBeer.POURING_CHRISTMAS_EVENT, SoundCategory.BLOCKS, 0.6f, 1f);
+                player.getWorld().playSound(null, new BlockPos(getPlayerPosInt(player)), DrinkBeer.POURING_CHRISTMAS_EVENT, SoundCategory.BLOCKS, 0.6f, 1f);
             }
-            player.world.playSound(null, new BlockPos(player.getPos()), DrinkBeer.POURING_EVENT, SoundCategory.BLOCKS, 1f, 1f);
+            player.getWorld().playSound(null, new BlockPos(getPlayerPosInt(player)), DrinkBeer.POURING_EVENT, SoundCategory.BLOCKS, 1f, 1f);
         }
     }
 

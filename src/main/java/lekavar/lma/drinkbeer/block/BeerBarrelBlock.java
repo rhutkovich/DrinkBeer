@@ -3,7 +3,9 @@ package lekavar.lma.drinkbeer.block;
 import lekavar.lma.drinkbeer.DrinkBeer;
 import lekavar.lma.drinkbeer.block.entity.BeerBarrelEntity;
 import net.minecraft.block.*;
-import net.minecraft.block.entity.*;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityTicker;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.screen.NamedScreenHandlerFactory;
@@ -47,7 +49,7 @@ public class BeerBarrelBlock extends BlockWithEntity implements BlockEntityProvi
     }
 
     public BlockState getPlacementState(ItemPlacementContext ctx) {
-        return (BlockState) this.getDefaultState().with(HorizontalFacingBlock.FACING, ctx.getPlayerFacing());
+        return this.getDefaultState().with(HorizontalFacingBlock.FACING, ctx.getPlayer().getHorizontalFacing());
     }
 
     @Override

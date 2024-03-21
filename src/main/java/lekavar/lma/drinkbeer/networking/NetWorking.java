@@ -23,7 +23,7 @@ public class NetWorking {
             if (screenHandler instanceof TradeBoxScreenHandler) {
                 BlockPos pos = buf.readBlockPos();
                 server.execute(() -> {
-                    TradeboxEntity tradeboxEntity = (TradeboxEntity) player.world.getBlockEntity(pos);
+                    TradeboxEntity tradeboxEntity = (TradeboxEntity) player.getWorld().getBlockEntity(pos);
                     tradeboxEntity.screenHandler.setTradeboxCooling();
                 });
             }

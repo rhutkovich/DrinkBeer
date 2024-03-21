@@ -1,16 +1,30 @@
 # DrinkBeer
-Drink Beer by Lekavar, updated and slightly customized by ClockwerkKaiser.
+Drink Beer originally written by @Lekavar, updated and slightly customized by @ClockwerkKaiser and finally patched by @rhutkovich.
 
-Customizations: 
-- Drunk StatusEffect timers have been reversed and slightly lowered. 1 Beer grants 30ish seconds of Drunk I. 5 Beers grants 2.5 minutes of Drunk V.
-- (WIP) Hungover StatusEffect. Incentivises Drunk players to "Sleep it off" by instantly removing the negative status effects of Drunk on Sleep. However, the player wakes up with a Hangover (currently just Slowness II. Higher levels of Drunk result in longer Hangovers.
-- The Bartending Table will no longer create an output without having spices. (Unstackable spiced drinks will still display an output).
-- The Bartending table no longer automatically takes a drink from your hand upon opening it's GUI. (Fixes a major duping bug.)
-- Replaced depreciated code for ease of future updating.
-- Various crash fixes.
-- Tested in both SSP and SMP
+Lekavar's original source code: https://github.com/Lekavar/DrinkBeer  
+ClockwerkKaiser's improvements: https://github.com/ClockwerkKaiser/DrinkBeer
 
-You can view the mod's original Source Code here: https://github.com/Lekavar/DrinkBeer  
-You can view the mod's modified (current) Soruce Code here: https://github.com/ClockwerkKaiser/DrinkBeer  
+## ⚠️ Mod stability is not guaranteed (yet) ⚠️
 
-Special thanks to Lekavar for creating this amazing mod!
+Current state seems to be working for setup:
+```Minecraft 1.20.1```, ```Fabric Loader 0.15.6```, ```Fabric 0.91.1+1.20.1```
+
+### ✅ What works:
+- Main items crafts (Keg, Mugs, bells, etc.) from: [original mod page](https://www.curseforge.com/minecraft/mc-mods/drink-beer-forge)
+- Brewing beer process
+- Beer drinking post-effects
+
+### ❌ What doesn't work:
+- There is no separate tab in Creative Mode, thus items are not available in Creative UI.
+- There is no crafts/recipes suggestion in mods like Just Enough Items.
+
+### 🗒️ Notes:
+- While items are not directly available in Creative Mode in UI, they are still obtainable using `/give` command.
+- To create a __Call Bell__ you have to exactly use __Dark Oak Planks__:
+
+![Dark Oak Planks](https://static.wikia.nocookie.net/minecraftpocketedition/images/c/ca/Dark_Oak_Wood_Planks.png)
+
+
+
+
+Special thanks to Lekavar for initial creating this amazing mod and ClockwerKaiser for maintaining it!
